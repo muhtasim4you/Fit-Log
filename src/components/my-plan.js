@@ -35,11 +35,8 @@ export default function MyPlan({ initialTab }) {
   const list = listIds
     .map((id) => workouts.find((workout) => workout.id === id))
     .filter(Boolean);
-  const planned = planIds
-    .map((id) => workouts.find((workout) => workout.id === id))
-    .filter(Boolean);
-  const totalMinutes = planned.reduce((total, workout) => total + workout.duration, 0);
-  const totalCalories = planned.reduce(
+  const totalMinutes = list.reduce((total, workout) => total + workout.duration, 0);
+  const totalCalories = list.reduce(
     (total, workout) => total + workout.caloriesBurned,
     0,
   );
@@ -61,8 +58,11 @@ export default function MyPlan({ initialTab }) {
         </div>
       </section>
 
-      <section className="metrics-grid" aria-label="Today's plan summary">
-        <Metric label="Exercises" value={planned.length} icon="01" />
+      <section
+        className="metrics-grid"
+        aria-label={isSavedTab ? "Saved workouts summary" : "Today's plan summary"}
+      >
+        <Metric label="Exercises" value={list.length} icon="01" />
         <Metric label="Minutes" value={totalMinutes} icon="◷" />
         <Metric label="Calories" value={totalCalories} icon="♨" />
       </section>
