@@ -559,6 +559,125 @@ button {
   color: var(--accent);
 }
 
+.library-controls {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 19px;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  background: #0e100c;
+}
+
+.search-control {
+  display: flex;
+  min-width: 180px;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-icon {
+  display: grid;
+  width: 17px;
+  height: 17px;
+  color: #777b70;
+}
+
+.search-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.search-control input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--foreground);
+  font-size: 11px;
+}
+
+.search-control input::placeholder {
+  color: #6f7369;
+}
+
+.sort-control {
+  position: relative;
+  display: flex;
+  min-height: 31px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 9px 0 13px;
+  border-left: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sort-control select {
+  max-width: 110px;
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--foreground);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.sort-control option {
+  background: var(--surface);
+}
+
+.sort-control > svg {
+  width: 13px;
+  height: 13px;
+  margin-left: -6px;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.library-controls .result-count {
+  padding: 0 4px 0 10px;
+  border-left: 1px solid var(--line);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.library-empty {
+  padding: 50px 20px;
+  border: 1px dashed #35392d;
+  text-align: center;
+}
+
+.library-empty h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.library-empty p {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
 .workout-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -884,10 +1003,26 @@ button {
     line-height: 1.6;
   }
 
-  .result-count {
-    padding-top: 7px;
-    font-size: 8px;
-    white-space: nowrap;
+  .library-controls {
+    flex-wrap: wrap;
+    gap: 7px 4px;
+    padding: 8px;
+  }
+
+  .search-control {
+    min-width: 100%;
+    min-height: 33px;
+  }
+
+  .sort-control {
+    flex: 1;
+    justify-content: space-between;
+    padding-left: 5px;
+  }
+
+  .library-controls .result-count {
+    border-left: 0;
+    padding: 0 4px;
   }
 
   .workout-grid {

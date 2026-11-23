@@ -3,6 +3,7 @@
 import WorkoutCard from "../components/workout-card";
 import WorkoutImage from "../components/workout-image";
 import { useFitLog } from "../components/fitlog-provider";
+import { useMemo, useState } from "react";
 
 function LoadingGrid() {
   return (
@@ -20,7 +21,20 @@ function LoadingGrid() {
 
 export default function Home() {
   const { workouts, workoutStatus, workoutError, retryWorkouts } = useFitLog();
+  const [sortBy, setSortBy] = useState("duration");
+  const [search, setSearch] = useState("");
   const featuredWorkout = workouts[0];
+  const visibleWorkouts = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    return workouts
+      .filter((workout) =>
+        `${workout.name} ${workout.muscleGroups.join(" ")} ${workout.equipment}`
+          .toLowerCase()
+          .includes(query),
+      )
+      .sort((left, right) => left[sortBy] - right[sortBy] || left.id - right.id);
+  }, [search, sortBy, workouts]);
 
   return (
     <div className="home-page">
@@ -77,12 +91,41 @@ export default function Home() {
               Twelve lifts covering every major muscle group.
             </p>
           </div>
-          {workoutStatus === "ready" && (
-            <span className="result-count">
-              <strong>{workouts.length.toString().padStart(2, "0")}</strong> exercises
-            </span>
-          )}
         </div>
+
+        {workoutStatus === "ready" && (
+          <div className="library-controls">
+            <label className="search-control">
+              <span className="search-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" strokeWidth="1.7" />
+                  <path d="m16 16 4.5 4.5" stroke="currentColor" strokeLinecap="round" strokeWidth="1.7" />
+                </svg>
+              </span>
+              <span className="visually-hidden">Search workouts</span>
+              <input
+                type="search"
+                placeholder="Search lifts or muscle groups"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+              />
+            </label>
+            <label className="sort-control">
+              <span>Sort by</span>
+              <select value={sortBy} onChange={(event) => setSortBy(event.target.value)}>
+                <option value="duration">Duration</option>
+                <option value="caloriesBurned">Calories</option>
+                <option value="rating">Rating</option>
+              </select>
+              <svg aria-hidden="true" viewBox="0 0 16 16" fill="none">
+                <path d="m4 6 4 4 4-4" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+              </svg>
+            </label>
+            <span className="result-count">
+              <strong>{visibleWorkouts.length.toString().padStart(2, "0")}</strong> exercises
+            </span>
+          </div>
+        )}
 
         {workoutStatus === "loading" && (
           <div className="loading-state" role="status">
@@ -101,11 +144,18 @@ export default function Home() {
           </div>
         )}
         {workoutStatus === "ready" && (
-          <div className="workout-grid">
-            {workouts.map((workout) => (
-              <WorkoutCard key={workout.id} workout={workout} />
-            ))}
-          </div>
+          visibleWorkouts.length > 0 ? (
+            <div className="workout-grid">
+              {visibleWorkouts.map((workout) => (
+                <WorkoutCard key={workout.id} workout={workout} />
+              ))}
+            </div>
+          ) : (
+            <div className="library-empty">
+              <h3>No lifts found</h3>
+              <p>Try a different workout name or muscle group.</p>
+            </div>
+          )
         )}
       </section>
     </div>
