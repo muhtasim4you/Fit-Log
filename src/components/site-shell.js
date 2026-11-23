@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useFitLog } from "./fitlog-provider";
 
 function BrandMark() {
   return (
@@ -19,9 +20,10 @@ function BrandMark() {
   );
 }
 
-export function SiteHeader({ planCount = 0, savedCount = 0 }) {
+export function SiteHeader() {
   const pathname = usePathname();
   const isWorkoutPage = pathname === "/" || pathname.startsWith("/workout/");
+  const { planIds = [], savedIds = [] } = useFitLog();
 
   return (
     <header className="site-header">
@@ -42,15 +44,15 @@ export function SiteHeader({ planCount = 0, savedCount = 0 }) {
           </Link>
         </nav>
         <div className="nav-actions">
-          <Link className="nav-badge" href="/my-plan" aria-label={`Plan, ${planCount} exercises`}>
-            Plan <strong>{planCount}</strong>
+          <Link className="nav-badge" href="/my-plan" aria-label={`Plan, ${planIds.length} exercises`}>
+            Plan <strong>{planIds.length}</strong>
           </Link>
           <Link
             className="nav-badge saved"
             href="/my-plan?tab=saved"
-            aria-label={`Saved, ${savedCount} exercises`}
+            aria-label={`Saved, ${savedIds.length} exercises`}
           >
-            Saved <strong>{savedCount}</strong>
+            Saved <strong>{savedIds.length}</strong>
           </Link>
         </div>
       </div>

@@ -1,5 +1,6 @@
 import "./globals.css";
 import { SiteFooter, SiteHeader } from "../components/site-shell";
+import { FitLogProvider } from "../components/fitlog-provider";
 
 export const metadata = {
   title: "FitLog — Workout Library",
@@ -11,9 +12,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <SiteHeader />
-        <main className="site-main">{children}</main>
-        <SiteFooter />
+        <FitLogProvider>
+          <SiteHeader />
+          <main className="site-main">{children}</main>
+          <SiteFooter />
+        </FitLogProvider>
       </body>
     </html>
   );
