@@ -1159,6 +1159,73 @@ button {
   }
 }
 
+.not-found {
+  position: relative;
+  display: flex;
+  min-height: 67vh;
+  align-items: flex-start;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  width: min(100% - 64px, 1120px);
+  margin-inline: auto;
+  padding-block: 70px;
+}
+
+.not-found h1 {
+  max-width: 880px;
+  font-size: clamp(66px, 10vw, 130px);
+}
+
+.not-found > p:not(.eyebrow) {
+  max-width: 450px;
+  margin: 20px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.not-found .button {
+  margin-top: 24px;
+}
+
+.not-found-code {
+  position: absolute;
+  right: 0;
+  bottom: 45px;
+  color: #24281d;
+  font-family: var(--font-display);
+  font-size: clamp(60px, 14vw, 180px);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.route-error {
+  min-height: 55vh;
+}
+
+@media (max-width: 700px) {
+  .not-found {
+    width: min(100% - 32px, 1120px);
+    min-height: 62vh;
+    padding-block: 50px;
+  }
+
+  .not-found h1 {
+    font-size: clamp(56px, 15vw, 84px);
+  }
+
+  .not-found > p:not(.eyebrow) {
+    font-size: 12px;
+  }
+
+  .not-found-code {
+    bottom: 30px;
+    font-size: 24vw;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
