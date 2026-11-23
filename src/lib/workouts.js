@@ -6,6 +6,7 @@ const WORKOUT_ENDPOINTS = [
 function isWorkoutList(value) {
   return (
     Array.isArray(value) &&
+    value.length > 0 &&
     value.every(
       (workout) =>
         Number.isInteger(workout.id) &&
@@ -13,9 +14,14 @@ function isWorkoutList(value) {
         typeof workout.image === "string" &&
         Array.isArray(workout.muscleGroups) &&
         typeof workout.equipment === "string" &&
+        typeof workout.difficulty === "string" &&
         typeof workout.duration === "number" &&
         typeof workout.caloriesBurned === "number" &&
-        typeof workout.rating === "number",
+        typeof workout.rating === "number" &&
+        typeof workout.sets === "number" &&
+        typeof workout.reps === "string" &&
+        typeof workout.description === "string" &&
+        Array.isArray(workout.instructions),
     )
   );
 }
