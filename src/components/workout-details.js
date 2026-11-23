@@ -83,6 +83,7 @@ export default function WorkoutDetails({ workoutId }) {
               src={workout.image}
               alt={`${workout.name} exercise illustration`}
               className="detail-image"
+              priority
             />
             <span className="detail-image-index">
               EXERCISE <strong>{String(workout.id).padStart(2, "0")}</strong>

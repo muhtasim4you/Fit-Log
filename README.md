@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# FitLog — Workout Library
 
-## Getting Started
+FitLog is a responsive workout library and daily training log. Browse exercises,
+review form instructions, build a plan of up to five lifts, and keep saved
+workouts on hand for later.
 
-First, run the development server:
+## Features
+
+- Browse 12 API-powered exercises with muscle groups, equipment, and stats.
+- Search by workout name, muscle group, or equipment; sort by duration,
+  calories, or rating.
+- Open responsive workout detail pages with exercise specs and step-by-step
+  instructions.
+- Add lifts to a five-exercise daily plan, save them for later, and track
+  completed work.
+- Review plan totals for exercises, minutes, and calories; remove items from
+  either list.
+- Persist plan, saved, and completed exercise IDs in browser `localStorage`.
+- Use the responsive dark interface on mobile, tablet, and desktop.
+
+## Built with
+
+- Next.js 16 App Router
+- React 19
+- Tailwind CSS 4 and custom responsive CSS
+- FitLog workout API with a backup endpoint
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+npm start
+```
 
-## Learn More
+The app loads exercise data through the `/api/workouts` route. It tries
+`https://api.abcz.workers.dev/api/fitlog` first and falls back to
+`https://api.api-store.workers.dev/api/fitlog`. Plan and saved selections are
+stored locally in the current browser and are not synced between devices.
 
-To learn more about Next.js, take a look at the following resources:
+## Routes
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/` — workout library, search, and sorting
+- `/workout/[id]` — exercise details and add/save actions
+- `/my-plan` — today's plan and summary metrics
+- `/my-plan?tab=saved` — saved exercises

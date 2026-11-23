@@ -63,6 +63,7 @@ export default function Home() {
               <WorkoutImage
                 src={featuredWorkout.image}
                 alt={`${featuredWorkout.name} exercise illustration`}
+                priority
               />
             ) : (
               <div className="hero-image-placeholder" aria-hidden="true">
