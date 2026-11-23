@@ -62,7 +62,7 @@ export default function MyPlan({ initialTab }) {
       </section>
 
       <section className="metrics-grid" aria-label="Today's plan summary">
-        <Metric label="Exercises" value={planIds.length} icon="01" />
+        <Metric label="Exercises" value={planned.length} icon="01" />
         <Metric label="Minutes" value={totalMinutes} icon="◷" />
         <Metric label="Calories" value={totalCalories} icon="♨" />
       </section>

@@ -15,10 +15,12 @@ function isWorkoutList(value) {
         Array.isArray(workout.muscleGroups) &&
         typeof workout.equipment === "string" &&
         typeof workout.difficulty === "string" &&
-        typeof workout.duration === "number" &&
-        typeof workout.caloriesBurned === "number" &&
-        typeof workout.rating === "number" &&
-        typeof workout.sets === "number" &&
+        Number.isFinite(workout.duration) &&
+        workout.duration >= 0 &&
+        Number.isFinite(workout.caloriesBurned) &&
+        workout.caloriesBurned >= 0 &&
+        Number.isFinite(workout.rating) &&
+        Number.isFinite(workout.sets) &&
         typeof workout.reps === "string" &&
         typeof workout.description === "string" &&
         Array.isArray(workout.instructions),

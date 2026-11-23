@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -38,6 +39,34 @@ export function FitLogProvider({ children }) {
   const [storageReady, setStorageReady] = useState(false);
   const [toast, setToast] = useState("");
   const toastTimer = useRef(null);
+  const planIdsRef = useRef([]);
+  const savedIdsRef = useRef([]);
+  const availableWorkoutIds = useMemo(
+    () => new Set(workouts.map((workout) => workout.id)),
+    [workouts],
+  );
+  const workoutsReady = workoutStatus === "ready";
+  const visiblePlanIds = useMemo(
+    () =>
+      planIds
+        .filter((id) => !workoutsReady || availableWorkoutIds.has(id))
+        .slice(0, 5),
+    [availableWorkoutIds, planIds, workoutsReady],
+  );
+  const visibleSavedIds = useMemo(
+    () =>
+      savedIds.filter((id) => !workoutsReady || availableWorkoutIds.has(id)),
+    [availableWorkoutIds, savedIds, workoutsReady],
+  );
+  const visibleCompletedIds = useMemo(
+    () => completedIds.filter((id) => visiblePlanIds.includes(id)),
+    [completedIds, visiblePlanIds],
+  );
+
+  useEffect(() => {
+    planIdsRef.current = visiblePlanIds;
+    savedIdsRef.current = visibleSavedIds;
+  }, [visiblePlanIds, visibleSavedIds]);
 
   const loadWorkouts = useCallback(async () => {
     try {
@@ -72,13 +101,15 @@ export function FitLogProvider({ children }) {
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
-      for (const [key, setter] of [
-        [STORAGE_KEYS.plan, setPlanIds],
-        [STORAGE_KEYS.saved, setSavedIds],
-        [STORAGE_KEYS.completed, setCompletedIds],
+      for (const [key, setter, idsRef] of [
+        [STORAGE_KEYS.plan, setPlanIds, planIdsRef],
+        [STORAGE_KEYS.saved, setSavedIds, savedIdsRef],
+        [STORAGE_KEYS.completed, setCompletedIds, null],
       ]) {
         try {
-          setter(readStoredIds(key));
+          const ids = readStoredIds(key);
+          if (idsRef) idsRef.current = ids;
+          setter(ids);
         } catch (error) {
           console.error(
             "Unable to restore saved workouts:",
@@ -96,11 +127,17 @@ export function FitLogProvider({ children }) {
     if (!storageReady) return;
 
     try {
-      window.localStorage.setItem(STORAGE_KEYS.plan, JSON.stringify(planIds));
-      window.localStorage.setItem(STORAGE_KEYS.saved, JSON.stringify(savedIds));
+      window.localStorage.setItem(
+        STORAGE_KEYS.plan,
+        JSON.stringify(visiblePlanIds),
+      );
+      window.localStorage.setItem(
+        STORAGE_KEYS.saved,
+        JSON.stringify(visibleSavedIds),
+      );
       window.localStorage.setItem(
         STORAGE_KEYS.completed,
-        JSON.stringify(completedIds),
+        JSON.stringify(visibleCompletedIds),
       );
     } catch (error) {
       console.error(
@@ -108,7 +145,12 @@ export function FitLogProvider({ children }) {
         error instanceof Error ? error.message : String(error),
       );
     }
-  }, [completedIds, planIds, savedIds, storageReady]);
+  }, [
+    storageReady,
+    visibleCompletedIds,
+    visiblePlanIds,
+    visibleSavedIds,
+  ]);
 
   useEffect(
     () => () => {
@@ -125,35 +167,51 @@ export function FitLogProvider({ children }) {
 
   const addToPlan = useCallback(
     (id) => {
-      if (planIds.includes(id)) {
+      const currentPlan = planIdsRef.current
+        .filter((item) => !workoutsReady || availableWorkoutIds.has(item))
+        .slice(0, 5);
+
+      if (currentPlan.includes(id)) {
         showToast("Already in today's plan.");
         return;
       }
-      if (planIds.length >= 5) {
+      if (currentPlan.length >= 5) {
         showToast("Today's plan is full. Finish a lift to make room.");
         return;
       }
-      setPlanIds((current) => [...current, id]);
+
+      const nextPlan = [...currentPlan, id];
+      planIdsRef.current = nextPlan;
+      setPlanIds(nextPlan);
       showToast("Added to today's plan.");
     },
-    [planIds, showToast],
+    [availableWorkoutIds, showToast, workoutsReady],
   );
 
   const saveForLater = useCallback(
     (id) => {
-      if (savedIds.includes(id)) {
+      const currentSaved = savedIdsRef.current.filter(
+        (item) => !workoutsReady || availableWorkoutIds.has(item),
+      );
+
+      if (currentSaved.includes(id)) {
         showToast("Already saved for later.");
         return;
       }
-      setSavedIds((current) => [...current, id]);
+
+      const nextSaved = [...currentSaved, id];
+      savedIdsRef.current = nextSaved;
+      setSavedIds(nextSaved);
       showToast("Saved for later.");
     },
-    [savedIds, showToast],
+    [availableWorkoutIds, showToast, workoutsReady],
   );
 
   const removeFromPlan = useCallback(
     (id) => {
-      setPlanIds((current) => current.filter((item) => item !== id));
+      const nextPlan = planIdsRef.current.filter((item) => item !== id);
+      planIdsRef.current = nextPlan;
+      setPlanIds(nextPlan);
       setCompletedIds((current) => current.filter((item) => item !== id));
       showToast("Removed from today's plan.");
     },
@@ -162,7 +220,9 @@ export function FitLogProvider({ children }) {
 
   const removeFromSaved = useCallback(
     (id) => {
-      setSavedIds((current) => current.filter((item) => item !== id));
+      const nextSaved = savedIdsRef.current.filter((item) => item !== id);
+      savedIdsRef.current = nextSaved;
+      setSavedIds(nextSaved);
       showToast("Removed from saved.");
     },
     [showToast],
@@ -185,9 +245,9 @@ export function FitLogProvider({ children }) {
         workoutStatus,
         workoutError,
         retryWorkouts,
-        planIds,
-        savedIds,
-        completedIds,
+        planIds: visiblePlanIds,
+        savedIds: visibleSavedIds,
+        completedIds: visibleCompletedIds,
         storageReady,
         toast,
         addToPlan,

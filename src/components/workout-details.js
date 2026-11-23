@@ -21,6 +21,7 @@ export default function WorkoutDetails({ workoutId }) {
     retryWorkouts,
     planIds,
     savedIds,
+    storageReady,
     addToPlan,
     saveForLater,
   } = useFitLog();
@@ -137,7 +138,11 @@ export default function WorkoutDetails({ workoutId }) {
             <button
               className="button button-primary"
               type="button"
-              disabled={alreadyPlanned || (!alreadyPlanned && planIsFull)}
+              disabled={
+                !storageReady ||
+                alreadyPlanned ||
+                (!alreadyPlanned && planIsFull)
+              }
               onClick={() => addToPlan(workout.id)}
             >
               <span aria-hidden="true">{alreadyPlanned ? "✓" : "+"}</span>
@@ -150,7 +155,7 @@ export default function WorkoutDetails({ workoutId }) {
             <button
               className="button button-outline"
               type="button"
-              disabled={alreadySaved}
+              disabled={!storageReady || alreadySaved}
               onClick={() => saveForLater(workout.id)}
             >
               <span aria-hidden="true">{alreadySaved ? "✓" : "☆"}</span>
