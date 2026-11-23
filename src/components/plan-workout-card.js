@@ -1,7 +1,13 @@
 import Link from "next/link";
 import WorkoutImage from "./workout-image";
 
-export default function PlanWorkoutCard({ workout, mode, completed = false }) {
+export default function PlanWorkoutCard({
+  workout,
+  mode,
+  completed = false,
+  onMarkDone,
+  onRemove,
+}) {
   return (
     <article className={`plan-workout-card${completed ? " is-completed" : ""}`}>
       <Link
@@ -35,10 +41,25 @@ export default function PlanWorkoutCard({ workout, mode, completed = false }) {
           View details
         </Link>
         {mode === "plan" && (
-          <span className="plan-card-hint">
-            {completed ? "Work logged" : `${workout.sets} sets · ${workout.reps} reps`}
-          </span>
+          <button
+            className={`button button-done${completed ? " is-done" : ""}`}
+            type="button"
+            disabled={completed}
+            onClick={() => onMarkDone(workout.id)}
+          >
+            <span aria-hidden="true">✓</span>
+            {completed ? "Done" : "Mark as done"}
+          </button>
         )}
+        <button
+          className="remove-workout"
+          type="button"
+          aria-label={`Remove ${workout.name} from ${mode === "plan" ? "today's plan" : "saved workouts"}`}
+          title="Remove"
+          onClick={() => onRemove(workout.id)}
+        >
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
     </article>
   );

@@ -928,11 +928,11 @@ button {
 
 .plan-card-actions {
   display: flex;
-  min-width: 126px;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 10px;
-  padding-inline: 8px;
+  min-width: 230px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-inline: 4px;
 }
 
 .plan-card-actions .button {
@@ -941,10 +941,40 @@ button {
   font-size: 8px;
 }
 
-.plan-card-hint {
-  color: #777b70;
-  font-size: 8px;
-  text-align: center;
+.plan-card-actions .button-done {
+  border-color: #3b4229;
+  color: #c9d2b1;
+}
+
+.plan-card-actions .button-done:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.plan-card-actions .button-done.is-done {
+  border-color: #3b4229;
+  background: #1b2113;
+  color: var(--accent);
+}
+
+.remove-workout {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #373a31;
+  background: transparent;
+  color: #888c81;
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.remove-workout:hover {
+  border-color: #a44c3d;
+  color: #ff8872;
 }
 
 .done-label {
@@ -1111,11 +1141,21 @@ button {
     min-width: 0;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
     padding: 0;
   }
 
   .plan-card-actions .button {
     min-height: 32px;
+    padding-inline: 8px;
+    font-size: 7px;
+  }
+
+  .remove-workout {
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
   }
 }
 

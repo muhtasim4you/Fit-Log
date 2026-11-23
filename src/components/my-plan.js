@@ -26,6 +26,9 @@ export default function MyPlan({ initialTab }) {
     savedIds,
     completedIds,
     storageReady,
+    markDone,
+    removeFromPlan,
+    removeFromSaved,
   } = useFitLog();
   const isSavedTab = initialTab === "saved";
   const listIds = isSavedTab ? savedIds : planIds;
@@ -126,6 +129,8 @@ export default function MyPlan({ initialTab }) {
                 workout={workout}
                 mode={isSavedTab ? "saved" : "plan"}
                 completed={!isSavedTab && completedIds.includes(workout.id)}
+                onMarkDone={markDone}
+                onRemove={isSavedTab ? removeFromSaved : removeFromPlan}
               />
             ))}
           </div>
