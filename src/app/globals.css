@@ -611,6 +611,514 @@ button {
   }
 }
 
+.my-plan-page {
+  width: min(100% - 64px, 1120px);
+  min-height: 65vh;
+  margin-inline: auto;
+  padding-block: 74px 110px;
+}
+
+.plan-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.plan-heading h1 {
+  font-size: clamp(60px, 8vw, 100px);
+}
+
+.plan-subtitle {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.plan-cap {
+  display: flex;
+  min-width: 115px;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 17px;
+  border: 1px solid var(--line);
+  background: #0e100c;
+}
+
+.plan-cap > span {
+  color: #777b70;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.plan-cap strong {
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 400;
+}
+
+.plan-cap i {
+  color: #85897c;
+  font-size: 15px;
+  font-style: normal;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 37px;
+}
+
+.metric-card {
+  display: flex;
+  min-height: 108px;
+  align-items: center;
+  gap: 17px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.metric-icon {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid #3b4229;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 17px;
+}
+
+.metric-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-display);
+  font-size: 29px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.plan-list-section {
+  margin-top: 52px;
+}
+
+.plan-tabs-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.plan-tabs {
+  display: flex;
+  gap: 25px;
+}
+
+.plan-tab {
+  position: relative;
+  display: inline-flex;
+  min-height: 46px;
+  align-items: center;
+  gap: 9px;
+  color: #83877c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 160ms ease;
+}
+
+.plan-tab:hover,
+.plan-tab.is-active {
+  color: var(--foreground);
+}
+
+.plan-tab.is-active::after {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  content: "";
+}
+
+.plan-tab > span {
+  display: grid;
+  min-width: 19px;
+  height: 19px;
+  place-items: center;
+  border: 1px solid #383b33;
+  border-radius: 50%;
+  color: #a4a79c;
+  font-size: 8px;
+}
+
+.plan-tab.is-active > span {
+  border-color: #3a4620;
+  background: #202817;
+  color: var(--accent);
+}
+
+.plan-list-count {
+  color: #73776d;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+}
+
+.plan-loading {
+  display: flex;
+  min-height: 270px;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: #b9bdb1;
+  font-size: 12px;
+}
+
+.plan-empty {
+  position: relative;
+  display: flex;
+  min-height: 350px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 20px;
+  border: 1px dashed #35392d;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgb(201 255 0 / 5%), transparent 48%),
+    #0d0f0b;
+  text-align: center;
+}
+
+.empty-index {
+  position: absolute;
+  top: 17px;
+  left: 17px;
+  color: #6a6e63;
+  font-size: 8px;
+  letter-spacing: 0.13em;
+}
+
+.plan-empty .eyebrow {
+  font-size: 8px;
+}
+
+.plan-empty h2 {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(43px, 7vw, 68px);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.plan-empty > p:not(.eyebrow) {
+  margin: 11px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.plan-empty .button {
+  margin-top: 20px;
+}
+
+.plan-workout-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.plan-workout-card {
+  display: grid;
+  min-height: 155px;
+  grid-template-columns: 180px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  transition: border-color 160ms ease;
+}
+
+.plan-workout-card:hover {
+  border-color: #414936;
+}
+
+.plan-card-image {
+  position: relative;
+  height: 133px;
+  overflow: hidden;
+  background: linear-gradient(140deg, #303724, #151711 65%);
+}
+
+.plan-card-image > img {
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.plan-card-content {
+  min-width: 0;
+  padding-block: 6px;
+}
+
+.plan-card-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.plan-card-title {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 26px;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.plan-card-title:hover {
+  color: var(--accent);
+}
+
+.plan-card-equipment {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.plan-card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 17px;
+  margin-top: 14px;
+}
+
+.plan-card-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #aeb1a6;
+  font-size: 9px;
+}
+
+.plan-card-stats b {
+  color: var(--accent);
+  font-size: 11px;
+}
+
+.plan-card-actions {
+  display: flex;
+  min-width: 126px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding-inline: 8px;
+}
+
+.plan-card-actions .button {
+  min-height: 39px;
+  padding-inline: 12px;
+  font-size: 8px;
+}
+
+.plan-card-hint {
+  color: #777b70;
+  font-size: 8px;
+  text-align: center;
+}
+
+.done-label {
+  color: var(--accent);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.is-completed .plan-card-title {
+  color: #a1a494;
+}
+
+@media (max-width: 1000px) {
+  .my-plan-page {
+    width: min(100% - 48px, 1120px);
+  }
+
+  .plan-workout-card {
+    grid-template-columns: 145px minmax(0, 1fr) auto;
+    gap: 14px;
+  }
+
+  .plan-card-image {
+    height: 125px;
+  }
+}
+
+@media (max-width: 700px) {
+  .my-plan-page {
+    width: min(100% - 32px, 1120px);
+    padding-block: 49px 70px;
+  }
+
+  .plan-heading {
+    align-items: start;
+  }
+
+  .plan-heading h1 {
+    font-size: clamp(58px, 16vw, 82px);
+  }
+
+  .plan-subtitle {
+    max-width: 260px;
+    font-size: 11px;
+    line-height: 1.6;
+  }
+
+  .plan-cap {
+    min-width: 82px;
+    padding: 10px;
+  }
+
+  .plan-cap strong {
+    font-size: 23px;
+  }
+
+  .plan-cap i {
+    font-size: 12px;
+  }
+
+  .metrics-grid {
+    gap: 7px;
+    margin-top: 26px;
+  }
+
+  .metric-card {
+    min-height: 89px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 7px;
+    padding: 10px;
+  }
+
+  .metric-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .metric-card p {
+    font-size: 7px;
+  }
+
+  .metric-card strong {
+    font-size: 22px;
+  }
+
+  .plan-list-section {
+    margin-top: 34px;
+  }
+
+  .plan-tabs {
+    gap: 15px;
+  }
+
+  .plan-tab {
+    gap: 6px;
+    font-size: 8px;
+  }
+
+  .plan-list-count {
+    font-size: 7px;
+    white-space: nowrap;
+  }
+
+  .plan-empty {
+    min-height: 320px;
+    padding: 20px;
+  }
+
+  .plan-empty h2 {
+    font-size: clamp(40px, 12vw, 58px);
+  }
+
+  .plan-workout-card {
+    grid-template-columns: 94px minmax(0, 1fr);
+    align-items: start;
+    gap: 10px;
+    padding: 8px;
+  }
+
+  .plan-card-image {
+    grid-row: span 2;
+    height: 104px;
+  }
+
+  .plan-card-title-row {
+    align-items: start;
+  }
+
+  .plan-card-title-row .tag-row {
+    gap: 4px;
+  }
+
+  .plan-card-title-row .tag {
+    min-height: 18px;
+    padding-inline: 5px;
+    font-size: 7px;
+  }
+
+  .plan-card-title {
+    margin-top: 9px;
+    font-size: 20px;
+  }
+
+  .plan-card-equipment {
+    font-size: 9px;
+  }
+
+  .plan-card-stats {
+    gap: 6px 9px;
+    margin-top: 10px;
+  }
+
+  .plan-card-stats span {
+    gap: 4px;
+    font-size: 8px;
+  }
+
+  .plan-card-actions {
+    grid-column: 2;
+    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+  }
+
+  .plan-card-actions .button {
+    min-height: 32px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
